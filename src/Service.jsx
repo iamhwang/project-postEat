@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
 
 import ServiceRouter from './ServiceRouter';
 import { authService } from './FirebaseInfo';
 
+import {
+  loadInitialData,
+} from './slice';
+
 export default function Service() {
-  const [isLoggedIn] = useState(authService.currentUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadInitialData(authService.currentUser));
+  });
+
+  const { isLoggedIn } = useSelector((state) => ({
+    isLoggedIn: state.isLoggedIn,
+  }));
+
   return (
     <>
       <ServiceRouter isLoggedIn={isLoggedIn} />

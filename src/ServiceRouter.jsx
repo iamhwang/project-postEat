@@ -8,7 +8,7 @@ import {
 import HomePage from './Home';
 import ProfilePage from './Profile';
 import EditProfilePage from './EditProfile';
-import AuthPage from './Auth';
+import AuthPage from './AuthPage';
 
 // eslint-disable-next-line react/prop-types
 export default function ServiceRouter({ isLoggedIn }) {
