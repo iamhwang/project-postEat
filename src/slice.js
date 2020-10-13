@@ -1,14 +1,15 @@
+/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 
-import {
-  fetchRegions,
-  fetchCategories,
-} from './services/api';
+import { authService } from './FirebaseInfo';
 
 const initialState = {
   regions: [],
   isLoggedIn: '',
-  idid: '',
+  loginFields: {
+    email: '',
+    password: '',
+  },
 };
 
 const reducers = {
@@ -17,6 +18,15 @@ const reducers = {
       ...state,
       isLoggedIn,
       idid: isLoggedIn,
+    };
+  },
+  changeLoginField(state, { payload: { name, value } }) {
+    return {
+      ...state,
+      loginFields: {
+        ...state.loginFields,
+        [name]: value,
+      },
     };
   },
   setRegions(state, { payload: regions }) {
@@ -41,17 +51,33 @@ const { actions, reducer } = createSlice({
 
 export const {
   checkUserState,
+  changeLoginField,
   setRegions,
   setCategories,
 } = actions;
 
-export function loadInitialData() {
-  return async (dispatch) => {
-    const regions = await fetchRegions();
-    dispatch(setRegions(regions));
+export function createUserId() {
+  return async (dispatch, getState) => {
+    const { loginFields: { email, password } } = getState();
+    try {
+      const data = await authService.createUserWithEmailAndPassword(email, password);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
-    const categories = await fetchCategories();
-    dispatch(setCategories(categories));
+export function signInUserId() {
+  return async (getState) => {
+    const { loginFields: { email, password } } = getState();
+
+    try {
+      const data = await authService.signInWithEmailAndPassword(email, password);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

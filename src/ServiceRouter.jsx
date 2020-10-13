@@ -8,7 +8,7 @@ import {
 import HomePage from './Home';
 import ProfilePage from './Profile';
 import EditProfilePage from './EditProfile';
-import AuthPage from './AuthPage';
+import AuthContainer from './AuthContainer';
 
 // eslint-disable-next-line react/prop-types
 export default function ServiceRouter({ isLoggedIn }) {
@@ -17,7 +17,7 @@ export default function ServiceRouter({ isLoggedIn }) {
       <Switch>
         {isLoggedIn ? (
           <Route exact path="/" component={HomePage} />
-        ) : <Route exact path="/" component={AuthPage} /> }
+        ) : <Route exact path="/" component={AuthContainer} /> }
         <Route path="/profile" component={ProfilePage} />
         <Route path="/edit" component={EditProfilePage} />
         <Route path="/" component={EditProfilePage} />
