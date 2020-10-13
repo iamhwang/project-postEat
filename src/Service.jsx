@@ -3,18 +3,19 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import ServiceRouter from './ServiceRouter';
-import { authService } from './FirebaseInfo';
+// import { authService } from './FirebaseInfo';
 
 import {
-  loadInitialData,
+  checkUserState,
 } from './slice';
 
 export default function Service() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(loadInitialData(authService.currentUser));
-  });
+  // useEffect(() => {
+  //   dispatch(checkUserState(authService.currentUser));
+  // });
+  // console.log(authService.currentUser);
 
   const { isLoggedIn } = useSelector((state) => ({
     isLoggedIn: state.isLoggedIn,

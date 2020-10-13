@@ -7,10 +7,18 @@ import {
 
 const initialState = {
   regions: [],
-  idid: 'idid11',
+  isLoggedIn: '',
+  idid: '',
 };
 
 const reducers = {
+  checkUserState(state, { payload: isLoggedIn }) {
+    return {
+      ...state,
+      isLoggedIn,
+      idid: isLoggedIn,
+    };
+  },
   setRegions(state, { payload: regions }) {
     return {
       ...state,
@@ -32,6 +40,7 @@ const { actions, reducer } = createSlice({
 });
 
 export const {
+  checkUserState,
   setRegions,
   setCategories,
 } = actions;
