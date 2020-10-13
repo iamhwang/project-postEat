@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   changeLoginField,
   createUserId,
+  signInUserId,
 } from './slice';
 
 import AuthPage from './AuthPage';
@@ -24,11 +25,16 @@ export default function AuthContainer() {
     dispatch(createUserId());
   }
 
+  function handleClick() {
+    dispatch(signInUserId());
+  }
+
   return (
     <AuthPage
       fields={loginFields}
       onChange={handleChange}
       onSubmit={handleSubmit}
+      onClick={handleClick}
     />
   );
 }

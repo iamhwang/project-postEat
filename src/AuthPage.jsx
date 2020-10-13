@@ -3,7 +3,7 @@
 import React from 'react';
 
 export default function AuthPage({
-  fields, onChange, onSubmit,
+  fields, onChange, onSubmit, onClick,
 }) {
   const { email, password } = fields;
 
@@ -36,7 +36,13 @@ export default function AuthPage({
           type="button"
           onClick={onSubmit}
         >
-          Continue with Email
+          SIGNIN
+        </button>
+        <button
+          type="button"
+          onClick={onClick}
+        >
+          LOGIN
         </button>
       </>
     </>

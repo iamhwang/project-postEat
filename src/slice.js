@@ -59,9 +59,9 @@ export const {
 export function createUserId() {
   return async (dispatch, getState) => {
     const { loginFields: { email, password } } = getState();
+
     try {
       const data = await authService.createUserWithEmailAndPassword(email, password);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -69,12 +69,11 @@ export function createUserId() {
 }
 
 export function signInUserId() {
-  return async (getState) => {
+  return async (dispatch, getState) => {
     const { loginFields: { email, password } } = getState();
 
     try {
       const data = await authService.signInWithEmailAndPassword(email, password);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
