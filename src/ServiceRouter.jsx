@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   Switch,
@@ -10,9 +10,8 @@ import ProfilePage from './Profile';
 import EditProfilePage from './EditProfile';
 import AuthPage from './Auth';
 
-export default function App() {
-  const [isLoggedIn] = useState(false);
-
+// eslint-disable-next-line react/prop-types
+export default function ServiceRouter({ isLoggedIn }) {
   return (
     <>
       <Switch>
