@@ -17,7 +17,12 @@ const reducers = {
     return {
       ...state,
       isLoggedIn,
-      idid: isLoggedIn,
+    };
+  },
+  logoutUserId(state) {
+    return {
+      ...state,
+      isLoggedIn: '',
     };
   },
   changeLoginField(state, { payload: { name, value } }) {
@@ -50,6 +55,7 @@ const { actions, reducer } = createSlice({
 });
 
 export const {
+  logoutUserId,
   checkUserState,
   changeLoginField,
   setRegions,
@@ -61,19 +67,19 @@ export function createUserId() {
     const { loginFields: { email, password } } = getState();
 
     try {
-      const data = await authService.createUserWithEmailAndPassword(email, password);
+      await authService.createUserWithEmailAndPassword(email, password);
     } catch (error) {
       console.log(error);
     }
   };
 }
 
-export function signInUserId() {
+export function loginUserId() {
   return async (dispatch, getState) => {
     const { loginFields: { email, password } } = getState();
 
     try {
-      const data = await authService.signInWithEmailAndPassword(email, password);
+      await authService.signInWithEmailAndPassword(email, password);
     } catch (error) {
       console.log(error);
     }
