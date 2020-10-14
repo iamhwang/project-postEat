@@ -56,16 +56,11 @@ const reducers = {
     };
   },
   setPostEats(state, { payload: posted }) {
+    console.log("1");
+    console.log(posted);
     return {
       ...state,
-      postEats: [
-        {
-          postId: posted.postId,
-          postEat: posted.postEat,
-          createAt: posted.createAt,
-        },
-        ...state.postEats,
-      ],
+      postEats: posted,
     };
   },
 };
@@ -122,11 +117,12 @@ export function postEatOnFirebase() {
 
 export function getPostEatOnFirebase() {
   return async (dispatch) => {
-    const dbPostEats = await dbService.collection('postEat').get();
-    dbPostEats.forEach((document) => {
-      const postId = document.id;
-      const { postEat, createAt } = document.data();
-      dispatch(setPostEats({ postId, postEat, createAt }));
+    await dbService.collection('postEat').onSnapshot((snapshot) => {
+      const postEatsArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      dispatch(setPostEats(postEatsArray));
     });
   };
 }
