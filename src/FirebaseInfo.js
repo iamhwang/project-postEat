@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 const firebaseConfig = {
   // apiKey: process.env.REACT_APP_API_KEY,
@@ -20,5 +21,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// eslint-disable-next-line import/prefer-default-export
 export const authService = firebase.auth();
+
+export const dbService = firebase.firestore();

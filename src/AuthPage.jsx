@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/button-has-type */
 import React from 'react';
 
 export default function AuthPage({
@@ -29,20 +28,19 @@ export default function AuthPage({
           value={password}
           onChange={handleChange}
         />
-        <input type="submit" value="Log In" />
       </>
       <>
-        <button
-          type="button"
-          onClick={onSubmit}
-        >
-          SIGNIN
-        </button>
         <button
           type="button"
           onClick={onClick}
         >
           LOGIN
+        </button>
+        <button
+          type="button"
+          onClick={onSubmit}
+        >
+          SIGNIN
         </button>
       </>
     </>

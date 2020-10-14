@@ -5,7 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 
-import HomePage from './Home';
+import HomeContainer from './HomeContainer';
 import ProfilePage from './Profile';
 import EditProfilePage from './EditProfile';
 import AuthContainer from './AuthContainer';
@@ -16,11 +16,11 @@ export default function ServiceRouter({ isLoggedIn }) {
     <>
       <Switch>
         {isLoggedIn ? (
-          <Route exact path="/" component={HomePage} />
-        ) : <Route exact path="/" component={AuthContainer} /> }
+          <Route path="/" component={HomeContainer} />
+        ) : <Route path="/" component={AuthContainer} /> }
         <Route path="/profile" component={ProfilePage} />
         <Route path="/edit" component={EditProfilePage} />
-        <Route path="/" component={EditProfilePage} />
+        <Route path="/" component={AuthContainer} />
       </Switch>
     </>
   );

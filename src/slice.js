@@ -1,15 +1,21 @@
 /* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 
-import { authService } from './FirebaseInfo';
+import { authService, dbService } from './FirebaseInfo';
 
 const initialState = {
-  regions: [],
   isLoggedIn: '',
   loginFields: {
     email: '',
     password: '',
   },
+  postingText: '',
+  postEats: [
+    {
+      postEat: '',
+      createAt: '',
+    },
+  ],
 };
 
 const reducers = {
@@ -17,12 +23,6 @@ const reducers = {
     return {
       ...state,
       isLoggedIn,
-    };
-  },
-  logoutUserId(state) {
-    return {
-      ...state,
-      isLoggedIn: '',
     };
   },
   changeLoginField(state, { payload: { name, value } }) {
@@ -34,16 +34,30 @@ const reducers = {
       },
     };
   },
-  setRegions(state, { payload: regions }) {
+  logoutUserId(state) {
     return {
       ...state,
-      regions,
+      isLoggedIn: '',
     };
   },
-  setCategories(state, { payload: categories }) {
+  changePostEat(state, { payload: postingText }) {
     return {
       ...state,
-      categories,
+      postingText,
+    };
+  },
+  setPostEats(state, { payload: fbData }) {
+    console.log("1");
+    console.log(fbData);
+    return {
+      ...state,
+      postEats: [
+        {
+          postEat: fbData.postEat,
+          createAt: fbData.createAt,
+        },
+        ...state.postEats,
+      ],
     };
   },
 };
@@ -55,11 +69,11 @@ const { actions, reducer } = createSlice({
 });
 
 export const {
-  logoutUserId,
   checkUserState,
   changeLoginField,
-  setRegions,
-  setCategories,
+  logoutUserId,
+  changePostEat,
+  setPostEats,
 } = actions;
 
 export function createUserId() {
@@ -83,6 +97,24 @@ export function loginUserId() {
     } catch (error) {
       console.log(error);
     }
+  };
+}
+
+export function postEatOnFirebase() {
+  return async (dispatch, getState) => {
+    const { postingText } = getState();
+    await dbService.collection('postEat').add({
+      postEat: postingText,
+      createAt: Date.now(),
+    });
+    dispatch(changePostEat(''));
+  };
+}
+
+export function getPostEatOnFirebase() {
+  return async (dispatch) => {
+    const dbPostEats = await dbService.collection('postEat').get();
+    dbPostEats.forEach((document) => dispatch(setPostEats(document.data())));
   };
 }
 
