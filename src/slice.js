@@ -4,25 +4,28 @@ import { createSlice } from '@reduxjs/toolkit';
 import { authService, dbService } from './FirebaseInfo';
 
 const initialState = {
-  isLoggedIn: '',
+  isLoggedIn: {
+    userEmail: '',
+    userUid: '',
+  },
   loginFields: {
     email: '',
     password: '',
   },
+  userObj: '',
   postingText: '',
-  postEats: [
-    {
-      postEat: '',
-      createAt: '',
-    },
-  ],
+  postEats: [],
 };
 
 const reducers = {
-  checkUserState(state, { payload: isLoggedIn }) {
+  checkUserState(state, { payload: loginFields }) {
     return {
       ...state,
-      isLoggedIn,
+      isLoggedIn: {
+        ...state.isLoggedIn,
+        userEmail: loginFields.email,
+        userUid: loginFields.uid,
+      },
     };
   },
   changeLoginField(state, { payload: { name, value } }) {
@@ -40,21 +43,26 @@ const reducers = {
       isLoggedIn: '',
     };
   },
+  setUserObj(state, { payload: userObj }) {
+    return {
+      ...state,
+      userObj,
+    };
+  },
   changePostEat(state, { payload: postingText }) {
     return {
       ...state,
       postingText,
     };
   },
-  setPostEats(state, { payload: fbData }) {
-    console.log("1");
-    console.log(fbData);
+  setPostEats(state, { payload: posted }) {
     return {
       ...state,
       postEats: [
         {
-          postEat: fbData.postEat,
-          createAt: fbData.createAt,
+          postId: posted.postId,
+          postEat: posted.postEat,
+          createAt: posted.createAt,
         },
         ...state.postEats,
       ],
@@ -102,10 +110,11 @@ export function loginUserId() {
 
 export function postEatOnFirebase() {
   return async (dispatch, getState) => {
-    const { postingText } = getState();
+    const { postingText, isLoggedIn: { userUid } } = getState();
     await dbService.collection('postEat').add({
       postEat: postingText,
       createAt: Date.now(),
+      creatorId: userUid,
     });
     dispatch(changePostEat(''));
   };
@@ -114,7 +123,11 @@ export function postEatOnFirebase() {
 export function getPostEatOnFirebase() {
   return async (dispatch) => {
     const dbPostEats = await dbService.collection('postEat').get();
-    dbPostEats.forEach((document) => dispatch(setPostEats(document.data())));
+    dbPostEats.forEach((document) => {
+      const postId = document.id;
+      const { postEat, createAt } = document.data();
+      dispatch(setPostEats({ postId, postEat, createAt }));
+    });
   };
 }
 

@@ -33,9 +33,11 @@ export default function HomePage({
       >
         LOGOUT
       </button>
-      {postEats.map((posting) => (
-         <p>{posting.postEat} {posting.createAt}</p>
-      ))}
+      <ul>
+        {postEats.map((posting) => (
+          <li key={posting.postId}>{posting.postEat}</li>
+        ))}
+      </ul>
     </>
   );
 }

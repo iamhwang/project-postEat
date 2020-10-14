@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useSelector, useDispatch, connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { authService } from './FirebaseInfo';
