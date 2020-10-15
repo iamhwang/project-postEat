@@ -15,6 +15,7 @@ const initialState = {
   userObj: '',
   postingText: '',
   postEats: [],
+  postEatEdit: '',
 };
 
 const reducers = {
@@ -61,6 +62,12 @@ const reducers = {
       postEats: posted,
     };
   },
+  editPostEat(state, { payload: postEatEdit }) {
+    return {
+      ...state,
+      postEatEdit,
+    };
+  },
 };
 
 const { actions, reducer } = createSlice({
@@ -75,6 +82,7 @@ export const {
   logoutUserId,
   changePostEat,
   setPostEats,
+  editPostEat,
 } = actions;
 
 export function createUserId() {
@@ -128,6 +136,16 @@ export function getPostEatOnFirebase() {
 export function deletePostEatOnFirebase(postObjId) {
   return async () => {
     await dbService.doc(`postEat/${postObjId}`).delete();
+  };
+}
+
+export function updatePostEatOnFirebase(postObjId) {
+  return async (dispatch, getState) => {
+    const { postEatEdit } = getState();
+
+    await dbService.doc(`postEat/${postObjId}`).update({
+      postEat: postEatEdit,
+    });
   };
 }
 

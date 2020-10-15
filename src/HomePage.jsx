@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-import PostEatContainer from './PostEatContainer';
+import PostEatContainer from './PostEatsContainer';
 
 export default function HomePage({
   postingText, onChange, onSubmit, onClick,
