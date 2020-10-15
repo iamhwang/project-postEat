@@ -13,8 +13,9 @@ import AuthPage from './AuthPage';
 export default function AuthContainer() {
   const dispatch = useDispatch();
 
-  const { loginFields } = useSelector((state) => ({
+  const { loginFields, authError } = useSelector((state) => ({
     loginFields: state.loginFields,
+    authError: state.authError,
   }));
 
   function handleChange({ name, value }) {
@@ -35,6 +36,7 @@ export default function AuthContainer() {
       onChange={handleChange}
       onSubmit={handleSubmit}
       onClick={handleClick}
+      authError={authError}
     />
   );
 }

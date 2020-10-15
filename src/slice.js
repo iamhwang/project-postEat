@@ -12,7 +12,7 @@ const initialState = {
     email: '',
     password: '',
   },
-  userObj: '',
+  authError: '',
   postingText: '',
   postEats: [],
   postEatEdit: '',
@@ -44,12 +44,6 @@ const reducers = {
       isLoggedIn: '',
     };
   },
-  setUserObj(state, { payload: userObj }) {
-    return {
-      ...state,
-      userObj,
-    };
-  },
   changePostEat(state, { payload: postingText }) {
     return {
       ...state,
@@ -68,6 +62,18 @@ const reducers = {
       postEatEdit,
     };
   },
+  resetEditPostEat(state) {
+    return {
+      ...state,
+      postEatEdit: '',
+    };
+  },
+  addAuthError(state, { payload: authError }) {
+    return {
+      ...state,
+      authError,
+    };
+  },
 };
 
 const { actions, reducer } = createSlice({
@@ -83,6 +89,8 @@ export const {
   changePostEat,
   setPostEats,
   editPostEat,
+  resetEditPostEat,
+  addAuthError,
 } = actions;
 
 export function createUserId() {
@@ -92,7 +100,7 @@ export function createUserId() {
     try {
       await authService.createUserWithEmailAndPassword(email, password);
     } catch (error) {
-      console.log(error);
+      dispatch(addAuthError(error.message));
     }
   };
 }
@@ -104,7 +112,7 @@ export function loginUserId() {
     try {
       await authService.signInWithEmailAndPassword(email, password);
     } catch (error) {
-      console.log(error);
+      dispatch(addAuthError(error.message));
     }
   };
 }
@@ -146,6 +154,7 @@ export function updatePostEatOnFirebase(postObjId) {
     await dbService.doc(`postEat/${postObjId}`).update({
       postEat: postEatEdit,
     });
+    dispatch(resetEditPostEat());
   };
 }
 
