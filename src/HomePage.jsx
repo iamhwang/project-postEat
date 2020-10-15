@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
+import PostEatContainer from './PostEatContainer';
+
 export default function HomePage({
-  postingText, postEats, onChange, onSubmit, onClick,
+  postingText, onChange, onSubmit, onClick,
 }) {
   function handleChange(event) {
     const { target: { value } } = event;
@@ -33,11 +35,7 @@ export default function HomePage({
       >
         LOGOUT
       </button>
-      <ul>
-        {postEats.map((posting) => (
-          <li key={posting.postId}>{posting.postEat}</li>
-        ))}
-      </ul>
+      <PostEatContainer />
     </>
   );
 }

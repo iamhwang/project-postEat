@@ -22,9 +22,8 @@ export default function HomeContainer() {
     dispatch(getPostEatOnFirebase());
   }, [dispatch]);
 
-  const { postingText, postEats } = useSelector((state) => ({
+  const { postingText } = useSelector((state) => ({
     postingText: state.postingText,
-    postEats: state.postEats,
   }));
 
   function handleChange(value) {
@@ -44,7 +43,6 @@ export default function HomeContainer() {
   return (
     <HomePage
       postingText={postingText}
-      postEats={postEats}
       onChange={handleChange}
       onSubmit={handleSubmit}
       onClick={handleClick}

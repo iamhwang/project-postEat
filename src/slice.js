@@ -56,8 +56,6 @@ const reducers = {
     };
   },
   setPostEats(state, { payload: posted }) {
-    console.log("1");
-    console.log(posted);
     return {
       ...state,
       postEats: posted,
@@ -124,6 +122,12 @@ export function getPostEatOnFirebase() {
       }));
       dispatch(setPostEats(postEatsArray));
     });
+  };
+}
+
+export function deletePostEatOnFirebase(postObjId) {
+  return async () => {
+    await dbService.doc(`postEat/${postObjId}`).delete();
   };
 }
 
