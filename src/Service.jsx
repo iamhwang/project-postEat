@@ -26,14 +26,14 @@ export default function Service() {
   return (
     <>
       <ServiceRouter isLoggedIn={userEmail} />
-      <p>{userEmail}</p>
+      {/* <p>{userEmail}</p>
       <p>{userUid}</p>
       <>
         <footer>
           &copy;
           Post Eat
         </footer>
-      </>
+      </> */}
     </>
   );
 }

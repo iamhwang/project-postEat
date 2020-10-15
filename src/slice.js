@@ -44,6 +44,12 @@ const reducers = {
       isLoggedIn: '',
     };
   },
+  addAuthError(state, { payload: authError }) {
+    return {
+      ...state,
+      authError,
+    };
+  },
   changePostEat(state, { payload: postingText }) {
     return {
       ...state,
@@ -68,12 +74,6 @@ const reducers = {
       postEatEdit: '',
     };
   },
-  addAuthError(state, { payload: authError }) {
-    return {
-      ...state,
-      authError,
-    };
-  },
 };
 
 const { actions, reducer } = createSlice({
@@ -86,11 +86,11 @@ export const {
   checkUserState,
   changeLoginField,
   logoutUserId,
+  addAuthError,
   changePostEat,
   setPostEats,
   editPostEat,
   resetEditPostEat,
-  addAuthError,
 } = actions;
 
 export function createUserId() {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   changeLoginField,
@@ -11,12 +11,12 @@ import {
 import AuthPage from './AuthPage';
 
 export default function AuthContainer() {
-  const dispatch = useDispatch();
-
   const { loginFields, authError } = useSelector((state) => ({
     loginFields: state.loginFields,
     authError: state.authError,
   }));
+
+  const dispatch = useDispatch();
 
   function handleChange({ name, value }) {
     dispatch(changeLoginField({ name, value }));
@@ -34,8 +34,8 @@ export default function AuthContainer() {
     <AuthPage
       fields={loginFields}
       onChange={handleChange}
-      onSubmit={handleSubmit}
       onClick={handleClick}
+      onSubmit={handleSubmit}
       authError={authError}
     />
   );
