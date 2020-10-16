@@ -2,7 +2,7 @@
 import React from 'react';
 
 export default function AuthPage({
-  fields, onChange, onClick, onSubmit, authError,
+  fields, onChange, onClick, onSubmit, LoginErrorMessage,
 }) {
   const { email, password } = fields;
 
@@ -42,7 +42,7 @@ export default function AuthPage({
         >
           SIGNIN
         </button>
-        {authError}
+        {LoginErrorMessage}
       </>
     </>
   );

@@ -3,24 +3,24 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import ProfileContainer from './ProfileContainer';
-import PostContainer from './PostContainer';
-import PostEatsContainer from './PostEatsContainer';
+import NewPostContainer from './NewPostContainer';
+import PostsContainer from './PostsContainer';
 
 import {
-  getPostEatOnFirebase,
+  getPostsFromFirebase,
 } from './slice';
 
 export default function HomeContainer() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPostEatOnFirebase());
+    dispatch(getPostsFromFirebase());
   }, [dispatch]);
 
   return (
     <>
-      <PostContainer />
-      <PostEatsContainer />
+      <NewPostContainer />
+      <PostsContainer />
       <ProfileContainer />
     </>
   );

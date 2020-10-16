@@ -11,9 +11,9 @@ import {
 import AuthPage from './AuthPage';
 
 export default function AuthContainer() {
-  const { loginFields, authError } = useSelector((state) => ({
+  const { loginFields, LoginErrorMessage } = useSelector((state) => ({
     loginFields: state.loginFields,
-    authError: state.authError,
+    LoginErrorMessage: state.LoginErrorMessage,
   }));
 
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function AuthContainer() {
       onChange={handleChange}
       onClick={handleClick}
       onSubmit={handleSubmit}
-      authError={authError}
+      LoginErrorMessage={LoginErrorMessage}
     />
   );
 }

@@ -11,9 +11,8 @@ import { checkUserState } from './slice';
 export default function Service() {
   const dispatch = useDispatch();
 
-  const { userEmail, userUid } = useSelector((state) => ({
+  const { userEmail } = useSelector((state) => ({
     userEmail: state.isLoggedIn.userEmail,
-    userUid: state.isLoggedIn.userUid,
   }));
 
   useEffect(() => {

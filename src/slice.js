@@ -1,21 +1,27 @@
 /* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 
-import { authService, dbService } from './FirebaseInfo';
+import { v4 as uuidv4 } from 'uuid';
+
+import { authService, dbService, storeageService } from './FirebaseInfo';
 
 const initialState = {
-  isLoggedIn: {
-    userEmail: '',
-    userUid: '',
-  },
   loginFields: {
     email: '',
     password: '',
   },
-  authError: '',
-  postingText: '',
-  postEats: [],
-  postEatEdit: '',
+  LoginErrorMessage: '',
+  isLoggedIn: {
+    userEmail: '',
+    userUid: '',
+  },
+
+  posts: [],
+
+  newPostText: '',
+  newPostImage: '',
+  newPostImageUrl: '',
+  editPostText: '',
 };
 
 const reducers = {
@@ -44,34 +50,46 @@ const reducers = {
       isLoggedIn: '',
     };
   },
-  addAuthError(state, { payload: authError }) {
+  showAuthError(state, { payload: LoginErrorMessage }) {
     return {
       ...state,
-      authError,
+      LoginErrorMessage,
     };
   },
-  changePostEat(state, { payload: postingText }) {
+  setPostsToService(state, { payload: posts }) {
     return {
       ...state,
-      postingText,
+      posts,
     };
   },
-  setPostEats(state, { payload: posted }) {
+  changeNewPostText(state, { payload: newPostText }) {
     return {
       ...state,
-      postEats: posted,
+      newPostText,
     };
   },
-  editPostEat(state, { payload: postEatEdit }) {
+  attachNewPostImage(state, { payload: newPostImage }) {
     return {
       ...state,
-      postEatEdit,
+      newPostImage,
     };
   },
-  resetEditPostEat(state) {
+  attachNewPostImageUrl(state, { payload: newPostImageUrl }) {
     return {
       ...state,
-      postEatEdit: '',
+      newPostImageUrl,
+    };
+  },
+  editPost(state, { payload: editPostText }) {
+    return {
+      ...state,
+      editPostText,
+    };
+  },
+  resetEditPost(state) {
+    return {
+      ...state,
+      editPostText: '',
     };
   },
 };
@@ -86,11 +104,13 @@ export const {
   checkUserState,
   changeLoginField,
   logoutUserId,
-  addAuthError,
-  changePostEat,
-  setPostEats,
-  editPostEat,
-  resetEditPostEat,
+  showAuthError,
+  changeNewPostText,
+  setPostsToService,
+  editPost,
+  resetEditPost,
+  attachNewPostImage,
+  attachNewPostImageUrl,
 } = actions;
 
 export function createUserId() {
@@ -100,7 +120,7 @@ export function createUserId() {
     try {
       await authService.createUserWithEmailAndPassword(email, password);
     } catch (error) {
-      dispatch(addAuthError(error.message));
+      dispatch(showAuthError(error.message));
     }
   };
 }
@@ -112,49 +132,63 @@ export function loginUserId() {
     try {
       await authService.signInWithEmailAndPassword(email, password);
     } catch (error) {
-      dispatch(addAuthError(error.message));
+      dispatch(showAuthError(error.message));
     }
   };
 }
 
-export function postEatOnFirebase() {
-  return async (dispatch, getState) => {
-    const { postingText, isLoggedIn: { userUid } } = getState();
-    await dbService.collection('postEat').add({
-      postEat: postingText,
-      createAt: Date.now(),
-      creatorId: userUid,
-    });
-    dispatch(changePostEat(''));
-  };
-}
-
-export function getPostEatOnFirebase() {
+export function getPostsFromFirebase() {
   return async (dispatch) => {
-    await dbService.collection('postEat').onSnapshot((snapshot) => {
-      const postEatsArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
+    await dbService.collection('PostEat').onSnapshot((snapshot) => {
+      const POSTS = snapshot.docs.map((doc) => ({
+        POST_ID: doc.id,
         ...doc.data(),
       }));
-      dispatch(setPostEats(postEatsArray));
+      dispatch(setPostsToService(POSTS));
     });
   };
 }
 
-export function deletePostEatOnFirebase(postObjId) {
-  return async () => {
-    await dbService.doc(`postEat/${postObjId}`).delete();
-  };
-}
-
-export function updatePostEatOnFirebase(postObjId) {
+export function postOnFirebase() {
   return async (dispatch, getState) => {
-    const { postEatEdit } = getState();
-
-    await dbService.doc(`postEat/${postObjId}`).update({
-      postEat: postEatEdit,
+    const { newPostText, isLoggedIn: { userUid }, newPostImageUrl } = getState();
+    await dbService.collection('PostEat').add({
+      POST_TEXT: newPostText,
+      POST_IMAGE_URL: newPostImageUrl,
+      CREATE_DATE: Date.now(),
+      CREATE_UID: userUid,
     });
-    dispatch(resetEditPostEat());
+    dispatch(changeNewPostText(''));
+  };
+}
+
+export function uploadImageOnFirebase() {
+  return async (dispatch, getState) => {
+    const { isLoggedIn: { userUid }, newPostImage } = getState();
+
+    const fileRef = storeageService.ref().child(`${userUid}/${uuidv4()}`);
+    const response = await fileRef.putString(newPostImage, 'data_url');
+    const newPostImageUrl = await response.ref.getDownloadURL();
+    dispatch(attachNewPostImageUrl(newPostImageUrl));
+  };
+}
+
+export function updatePostOnFirebase(postObjId) {
+  return async (dispatch, getState) => {
+    const { editPostText } = getState();
+
+    await dbService.doc(`PostEat/${postObjId}`).update({
+      POST_TEXT: editPostText,
+    });
+    dispatch(resetEditPost());
+  };
+}
+
+export function deletePostOnFirebase(postObjId, postObjUrl) {
+  return async (dispatch) => {
+    await dbService.doc(`PostEat/${postObjId}`).delete();
+    await storeageService.refFromURL(postObjUrl).delete();
+    dispatch(attachNewPostImage(''));
   };
 }
 
