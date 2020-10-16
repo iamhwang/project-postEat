@@ -14,6 +14,8 @@ const initialState = {
   isLoggedIn: {
     userEmail: '',
     userUid: '',
+    userDisplayName: '',
+    userPhotoUrl: '',
   },
 
   posts: [],
@@ -25,13 +27,15 @@ const initialState = {
 };
 
 const reducers = {
-  checkUserState(state, { payload: loginFields }) {
+  checkUserState(state, { payload: userInf }) {
     return {
       ...state,
       isLoggedIn: {
         ...state.isLoggedIn,
-        userEmail: loginFields.email,
-        userUid: loginFields.uid,
+        userEmail: userInf.email,
+        userUid: userInf.uid,
+        userDisplayName: userInf.displayName,
+        userPhotoUrl: userInf.photoURL,
       },
     };
   },
@@ -92,6 +96,25 @@ const reducers = {
       editPostText: '',
     };
   },
+  editProfileDisplayName(state, { payload: profileDisplayName }) {
+    return {
+      ...state,
+      isLoggedIn: {
+        ...state.isLoggedIn,
+        userDisplayName: profileDisplayName,
+      },
+    };
+  },
+  editProfileInformation(state, { payload: profileInformation }) {
+    return {
+      ...state,
+      isLoggedIn: {
+        ...state.isLoggedIn,
+        userDisplayName: profileInformation.userDisplayName,
+        userPhotoUrl: profileInformation.userPhotoUrl,
+      },
+    };
+  },
 };
 
 const { actions, reducer } = createSlice({
@@ -111,6 +134,8 @@ export const {
   resetEditPost,
   attachNewPostImage,
   attachNewPostImageUrl,
+  editProfileDisplayName,
+  editProfileInformation,
 } = actions;
 
 export function createUserId() {
@@ -189,6 +214,18 @@ export function deletePostOnFirebase(postObjId, postObjUrl) {
     await dbService.doc(`PostEat/${postObjId}`).delete();
     await storeageService.refFromURL(postObjUrl).delete();
     dispatch(attachNewPostImage(''));
+  };
+}
+
+export function changeUserDisplayName() {
+  return async (dispatch, getState) => {
+    const { isLoggedIn: { userDisplayName } } = getState();
+
+    authService.onAuthStateChanged(async (user) => {
+      await user.updateProfile({
+        displayName: userDisplayName,
+      });
+    });
   };
 }
 
