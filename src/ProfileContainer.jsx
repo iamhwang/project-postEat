@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -15,7 +15,9 @@ import {
 import ProfilepPage from './ProfilePage';
 
 export default function ProfileContainer() {
-  const { isLoggedIn: { userDisplayName, userPhotoUrl } } = useSelector((state) => ({
+  const [editState, changeEditState] = useState(false);
+
+  const { isLoggedIn } = useSelector((state) => ({
     isLoggedIn: state.isLoggedIn,
   }));
 
@@ -27,6 +29,11 @@ export default function ProfileContainer() {
   }
 
   function handleEdit() {
+    changeEditState((prev) => !prev);
+  }
+
+  function handleSave() {
+    handleEdit();
     dispatch(changeUserDisplayName());
   }
 
@@ -39,10 +46,11 @@ export default function ProfileContainer() {
   return (
     <>
       <ProfilepPage
-        userDisplayName={userDisplayName}
-        userPhotoUrl={userPhotoUrl}
+        isLoggedIn={isLoggedIn}
         onChange={handleChange}
+        editState={editState}
         onEdit={handleEdit}
+        onSave={handleSave}
         onClick={handleClick}
       />
     </>

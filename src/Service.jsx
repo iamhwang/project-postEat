@@ -16,7 +16,7 @@ export default function Service() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    authService.onAuthStateChanged(async (user) => {
+    authService.onAuthStateChanged((user) => {
       const {
         email, uid, displayName, photoURL,
       } = user;

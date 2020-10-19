@@ -24,6 +24,8 @@ const initialState = {
   newPostImage: '',
   newPostImageUrl: '',
   editPostText: '',
+
+  basicProfileUrl: '',
 };
 
 const reducers = {

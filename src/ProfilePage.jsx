@@ -3,10 +3,9 @@
 import React from 'react';
 
 export default function ProfilepPage({
-  userDisplayName, userPhotoUrl, onChange, onEdit, onClick,
+  isLoggedIn, onChange, editState, onEdit, onSave, onClick,
 }) {
-  console.log(userDisplayName);
-  console.log(userPhotoUrl);
+  const { userEmail, userDisplayName, userPhotoUrl } = isLoggedIn;
 
   function handleChange(event) {
     const { target: { value } } = event;
@@ -15,15 +14,30 @@ export default function ProfilepPage({
 
   return (
     <>
+      <h4>{userEmail}</h4>
+      {userDisplayName}
       <h5>
-        {userDisplayName}
-        <img src={userPhotoUrl} />
+        {userDisplayName ? <>{userDisplayName}</> : <> Hey, No Name </> }
       </h5>
-      <input
-        type="text"
-        value={userDisplayName}
-        onChange={handleChange}
-      />
+      {userPhotoUrl
+        ? <img src={userPhotoUrl} width="100px" height="100px" />
+        : <img width="100px" height="100px" /> }
+      {editState
+          && (
+          <>
+            <input
+                type="text"
+                value={userDisplayName}
+                onChange={handleChange}
+            />
+            <button
+              type="button"
+              onClick={onSave}
+            >
+              수정
+            </button>
+          </>
+          )}
       <button
         type="button"
         onClick={onEdit}
