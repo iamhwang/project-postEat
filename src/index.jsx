@@ -9,7 +9,7 @@ import Service from './Service';
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Service />
     </BrowserRouter>
   </Provider>,

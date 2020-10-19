@@ -33,7 +33,7 @@ export default function Service() {
       <>
         <footer>
           &copy;
-          Post Eat
+          Post Eat @iamhwang
         </footer>
       </>
     </>

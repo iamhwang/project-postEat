@@ -1,12 +1,19 @@
+/* eslint-disable no-path-concat */
+/* eslint-disable prefer-template */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/index.js'),
+  entry: path.resolve(__dirname, 'src/index.jsx'),
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: __dirname + '/build',
     filename: 'index_bundle.js',
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public/index.html'),
+    }),
+  ],
   module: {
     rules: [
       {
@@ -24,9 +31,4 @@ module.exports = {
       index: 'index.html',
     },
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-    }),
-  ],
 };
