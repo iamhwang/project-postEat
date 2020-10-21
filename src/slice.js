@@ -3,7 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { authService, dbService, storeageService } from './FirebaseInfo';
+import {
+  firebaseInstance, authService, dbService, storeageService,
+} from './FirebaseInfo';
 
 const initialState = {
   loginFields: {
@@ -158,6 +160,18 @@ export function loginUserId() {
 
     try {
       await authService.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      dispatch(showAuthError(error.message));
+    }
+  };
+}
+
+export function loginUserIdWithGoogle() {
+  return async (dispatch) => {
+    const provider = new firebaseInstance.auth.GoogleAuthProvider();
+
+    try {
+      await authService.signInWithPopup(provider);
     } catch (error) {
       dispatch(showAuthError(error.message));
     }

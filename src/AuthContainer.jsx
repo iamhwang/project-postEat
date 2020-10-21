@@ -6,6 +6,7 @@ import {
   changeLoginField,
   createUserId,
   loginUserId,
+  loginUserIdWithGoogle,
 } from './slice';
 
 import AuthPage from './AuthPage';
@@ -30,12 +31,17 @@ export default function AuthContainer() {
     dispatch(loginUserId());
   }
 
+  function handleGoogleLogin() {
+    dispatch(loginUserIdWithGoogle());
+  }
+
   return (
     <AuthPage
       fields={loginFields}
       onChange={handleChange}
       onClick={handleClick}
       onSubmit={handleSubmit}
+      onGoogle={handleGoogleLogin}
       LoginErrorMessage={LoginErrorMessage}
     />
   );
