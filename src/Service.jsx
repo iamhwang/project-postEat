@@ -8,6 +8,8 @@ import ServiceRouter from './ServiceRouter';
 
 import { checkUserState } from './slice';
 
+import useStyles from './css';
+
 export default function Service() {
   const { userEmail } = useSelector((state) => ({
     userEmail: state.isLoggedIn.userEmail,
@@ -27,15 +29,11 @@ export default function Service() {
     });
   }, [dispatch]);
 
+  const cssStyle = useStyles();
+
   return (
-    <>
+    <div className={cssStyle.background}>
       <ServiceRouter isLoggedIn={userEmail} />
-      <>
-        <footer>
-          &copy;
-          Post Eat @iamhwang
-        </footer>
-      </>
-    </>
+    </div>
   );
 }
