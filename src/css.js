@@ -6,6 +6,10 @@ const MAIN_COLOR_ORANGE = '#FF9480';
 const MAIN_COLOR_YELLOW = '#FFEFA3';
 const MAIN_COLOR_GREEN = '#00A178';
 const MAIN_COLOR_WHITE = '#FFFFFF';
+//const MAIN_COLOR_GYAY = '#AAAAAA';
+const MAIN_COLOR_GYAY = '#B4B4B4';
+//const MAIN_COLOR_GYAY = '#bebebe';
+//const MAIN_COLOR_GYAY = '#C8C8C8';
 //const TRANSPARENT = 'transparent';
 const width = '400px';
 
@@ -26,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '60%',
     height: '60%',
-    background: MAIN_COLOR_WHITE,
+    //background: MAIN_COLOR_GYAY,
     margin: '10% 25% 10% 25%',
     display: 'flex',
   },
@@ -52,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   buttonLogin: {
     margin: theme.spacing(1),
     background: MAIN_COLOR_RED,
+    color: MAIN_COLOR_WHITE,
     width,
     fontWeight: 'bolder',
     '&:hover': {
@@ -60,7 +65,8 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonSignIn: {
     margin: theme.spacing(1),
-    background: MAIN_COLOR_GREEN,
+    background: MAIN_COLOR_GYAY,
+    color: MAIN_COLOR_WHITE,
     fontWeight: 'bolder',
     width,
     '&:hover': {
@@ -69,7 +75,8 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonGoogleIn: {
     margin: theme.spacing(1),
-    background: MAIN_COLOR_YELLOW,
+    background: MAIN_COLOR_GYAY,
+    color: MAIN_COLOR_WHITE,
     fontWeight: 'bolder',
     width,
     '&:hover': {

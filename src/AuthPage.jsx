@@ -15,17 +15,20 @@ export default function AuthPage({
   }
 
   const cssStyle = useStyles();
-  const calendar = '../images/calendar.png';
-  const logo = '../images/posteat.png';
+  const calendar = '../images/postit.jpg';
+  const logo = '../images/posteats.png';
 
   return (
     <div className={cssStyle.backgroundLogin}>
       <div className={cssStyle.windowLogin}>
         <div className={cssStyle.windowleft}>
-          <img src={calendar} width="500px" alt="Calendar" />
+          <img src={calendar} width="700px" alt="Calendar" />
         </div>
         <div className={cssStyle.windowRight}>
-          <img src={logo} width="500px" alt="PostEat Logo" />
+          <img src={logo} width="300px" alt="PostEat Logo" />
+          <p>
+            먹은 음식을 기록하다
+          </p>
           <TextField
             className={cssStyle.textfieldLogin}
             name="email"
@@ -48,7 +51,7 @@ export default function AuthPage({
           <Button
             className={cssStyle.buttonLogin}
             type="button"
-            color="primary"
+            color="default"
             variant="contained"
             onClick={onClick}
           >
@@ -57,7 +60,7 @@ export default function AuthPage({
           <Button
             className={cssStyle.buttonGoogleIn}
             type="button"
-            color="primary"
+            color="inherit"
             variant="contained"
             onClick={onGoogle}
           >
@@ -66,7 +69,7 @@ export default function AuthPage({
           <Button
             className={cssStyle.buttonSignIn}
             type="button"
-            color="primary"
+            color="inherit"
             variant="contained"
             onClick={onSubmit}
           >
