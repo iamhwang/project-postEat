@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/project-postEat/static/js/main.6894c43f.chunk.js",
-    "main.js.map": "/project-postEat/static/js/main.6894c43f.chunk.js.map",
+    "main.js": "/project-postEat/static/js/main.2f9afe42.chunk.js",
+    "main.js.map": "/project-postEat/static/js/main.2f9afe42.chunk.js.map",
     "runtime-main.js": "/project-postEat/static/js/runtime-main.e6d8b6c6.js",
     "runtime-main.js.map": "/project-postEat/static/js/runtime-main.e6d8b6c6.js.map",
-    "static/js/2.ba69155d.chunk.js": "/project-postEat/static/js/2.ba69155d.chunk.js",
-    "static/js/2.ba69155d.chunk.js.map": "/project-postEat/static/js/2.ba69155d.chunk.js.map",
+    "static/js/2.5e95d95a.chunk.js": "/project-postEat/static/js/2.5e95d95a.chunk.js",
+    "static/js/2.5e95d95a.chunk.js.map": "/project-postEat/static/js/2.5e95d95a.chunk.js.map",
     "index.html": "/project-postEat/index.html",
-    "precache-manifest.fa5a55fff7bae6b4f820c290a43a1a14.js": "/project-postEat/precache-manifest.fa5a55fff7bae6b4f820c290a43a1a14.js",
+    "precache-manifest.e46988527d94a2786a8a53012de8b192.js": "/project-postEat/precache-manifest.e46988527d94a2786a8a53012de8b192.js",
     "service-worker.js": "/project-postEat/service-worker.js",
-    "static/js/2.ba69155d.chunk.js.LICENSE.txt": "/project-postEat/static/js/2.ba69155d.chunk.js.LICENSE.txt"
+    "static/js/2.5e95d95a.chunk.js.LICENSE.txt": "/project-postEat/static/js/2.5e95d95a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e6d8b6c6.js",
-    "static/js/2.ba69155d.chunk.js",
-    "static/js/main.6894c43f.chunk.js"
+    "static/js/2.5e95d95a.chunk.js",
+    "static/js/main.2f9afe42.chunk.js"
   ]
 }
